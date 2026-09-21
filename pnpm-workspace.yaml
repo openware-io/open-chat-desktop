@@ -1,0 +1,10 @@
+packages:
+  - "."
+allowBuilds:
+  better-sqlite3: true
+  electron: true
+  electron-winstaller: true
+  esbuild: false
+  vue-demi: true
+minimumReleaseAgeExclude:
+  - electron@44.0.0

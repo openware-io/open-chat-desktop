@@ -1,0 +1,45 @@
+{
+  "name": "gv-chat-desktop",
+  "version": "2.0.3",
+  "description": "WV Chat 跨平台桌面客户端（Electron + Vue 3 + TypeScript）",
+  "main": "./out/main/index.js",
+  "author": "Starry Team",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "build:win": "electron-vite build && node node_modules/electron-builder/cli.js --win",
+    "build:mac": "electron-vite build && node node_modules/electron-builder/cli.js --mac",
+    "build:mas-dev": "electron-vite build && node node_modules/electron-builder/cli.js --mac mas-dev --universal",
+    "build:mas": "electron-vite build && node node_modules/electron-builder/cli.js --mac mas --universal",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^4.0.0",
+    "element-plus": "^2.14.5",
+    "pinia": "^2.3.1",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.41",
+    "vue-i18n": "^11.4.9",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@electron-toolkit/tsconfig": "^2.0.0",
+    "@types/node": "^26.2.0",
+    "@types/qrcode": "^1.5.6",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "typescript": "^5.8.0",
+    "vite": "^7.3.0",
+    "vue-tsc": "^3.3.11"
+  }
+}

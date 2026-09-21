@@ -1,0 +1,63 @@
+.account-page {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  background: #f6f7fa;
+}
+.account-page > header {
+  min-height: 64px;
+  box-sizing: border-box;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e8ebf0;
+  background: #fff;
+  color: #273043;
+  font-size: 18px;
+  font-weight: 650;
+}
+.account-page > main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+.form-card,
+.list-card {
+  width: min(560px, 100%);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 22px;
+  border: 1px solid #e8ebf0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgb(40 50 70 / 6%);
+}
+.list-card { padding: 5px 12px; }
+.person-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 3px;
+  border-bottom: 1px solid #eff1f4;
+}
+.person-row:last-child { border-bottom: 0; }
+.person-row > span {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+.person-row strong,
+.person-row small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.person-row strong { color: #303849; font-size: 14px; }
+.person-row small { color: #939baa; font-size: 11px; }
+.empty-state {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  color: #9ba4b3;
+}

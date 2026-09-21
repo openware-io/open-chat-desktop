@@ -1,0 +1,19 @@
+node_modules/
+out/
+dist/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Apple signing assets are machine-local and must never be committed.
+build/signing/*.provisionprofile
+build/signing/*.mobileprovision
+build/signing/*.cer
+build/signing/*.p12
+build/signing/*.certSigningRequest
+
+# open-source release additions
+dist-frameless/
+dist-*/

@@ -1,0 +1,47 @@
+appId: com.csmimtbshop.com
+productName: WV Chat
+directories:
+  buildResources: build
+  output: dist
+extraResources:
+  - from: build/icon.png
+    to: icon.png
+files:
+  - out/**
+  - package.json
+asarUnpack:
+  - resources/**
+win:
+  target:
+    - nsis
+  icon: build/icon.png
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: WV Chat
+mac:
+  target:
+    - dmg
+  icon: build/icon.png
+  category: public.app-category.social-networking
+  extendInfo:
+    NSMicrophoneUsageDescription: WV Chat uses the microphone for voice and video calls.
+    NSCameraUsageDescription: WV Chat uses the camera for video calls.
+mas:
+  type: distribution
+  identity: 6J34YQQ5AU
+  provisioningProfile: build/signing/mac_app_store.provisionprofile
+  entitlements: build/entitlements.mas.plist
+  entitlementsInherit: build/entitlements.mas.inherit.plist
+  hardenedRuntime: false
+  gatekeeperAssess: false
+masDev:
+  type: development
+  identity: 6J34YQQ5AU
+  provisioningProfile: build/signing/mac_development.provisionprofile
+  entitlements: build/entitlements.mas.plist
+  entitlementsInherit: build/entitlements.mas.inherit.plist
+  hardenedRuntime: false
+  gatekeeperAssess: false
