@@ -38,7 +38,7 @@ onMounted(async () => {
 function download(): void {
   const link = document.createElement('a')
   link.href = qrDataUrl.value
-  link.download = `gv-chat-${auth.user?.username || 'user'}-qr.png`
+  link.download = `open-chat-${auth.user?.username || 'user'}-qr.png`
   link.click()
 }
 </script>

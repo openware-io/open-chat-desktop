@@ -1,5 +1,5 @@
 {
-  "name": "gv-chat-desktop",
+  "name": "open-chat-desktop",
   "version": "2.0.3",
   "description": "WV Chat 跨平台桌面客户端（Electron + Vue 3 + TypeScript）",
   "main": "./out/main/index.js",
