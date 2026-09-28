@@ -1,6 +1,6 @@
 {
   "name": "open-chat-desktop",
-  "version": "2.0.3",
+  "version": "2.2.0",
   "description": "WV Chat 跨平台桌面客户端（Electron + Vue 3 + TypeScript）",
   "main": "./out/main/index.js",
   "author": "Starry Team",
