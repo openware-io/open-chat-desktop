@@ -1,4 +1,4 @@
-# gv_chat_desktop
+# open-chat-desktop
 
 WV Chat 跨平台桌面客户端（Electron + Vue 3 + TypeScript）。
 
