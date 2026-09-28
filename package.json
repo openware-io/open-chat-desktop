@@ -18,7 +18,8 @@
     "build:mas": "electron-vite build && node node_modules/electron-builder/cli.js --mac mas --universal",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
-    "typecheck": "npm run typecheck:node && npm run typecheck:web"
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "check": "npm run typecheck && npm run build && pnpm audit --prod --audit-level high --registry=https://registry.npmjs.org"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
