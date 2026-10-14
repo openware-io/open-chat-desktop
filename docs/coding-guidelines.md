@@ -1,4 +1,4 @@
-# gv_chat_desktop 编码规范
+# open-chat-desktop 编码规范
 
 ## 1. 语言与格式
 

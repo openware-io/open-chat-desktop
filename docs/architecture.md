@@ -1,10 +1,10 @@
-# gv_chat_desktop 架构总览
+# open-chat-desktop 架构总览
 
 > 桌面端（Electron）工程架构，随需求演进持续维护。
 
 ## 1. 定位
 
-WV Chat 跨平台桌面客户端，对移动端 App（gv_chat_app，Flutter）已实现功能 1:1 复刻，并补部分高频缺口。唯一后端为 gv_im_server（Java 微服务），桌面端只连 gateway，不直连业务服务。
+Open Chat 跨平台桌面客户端，对移动端 App（open-chat-app，Flutter）已实现功能 1:1 复刻，并补部分高频缺口。唯一后端为 open-im-server（Java 微服务），桌面端只连 gateway，不直连业务服务。
 
 ## 2. 技术栈
 
@@ -50,4 +50,4 @@ node:sqlite（内置 DatabaseSync）建 4 表：conversations / messages / outbo
 ## 8. 隔离约定
 
 - 桌面端独立 git 仓库，不依赖其它仓库的构建产物。
-- 对 gv_im_server / gv_chat_app 的改动走各自 worktree 独立分支，不 merge、不碰其它 agent 分支。
+- 对 open-im-server / open-chat-app 的改动走各自 worktree 独立分支，不 merge、不碰其它 agent 分支。

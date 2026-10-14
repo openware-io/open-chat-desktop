@@ -1,6 +1,6 @@
-# gv_chat_desktop 功能实现清单
+# open-chat-desktop 功能实现清单
 
-> 对齐 gv_chat_app（Flutter）已实现功能 1:1 复刻 + 评审通过的高频缺口。状态随开发更新。
+> 对齐 open-chat-app（Flutter）已实现功能 1:1 复刻 + 评审通过的高频缺口。状态随开发更新。
 
 ## 账号与认证
 - [x] 注册 / 登录（用户名+密码，JWT）

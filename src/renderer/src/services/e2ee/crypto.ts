@@ -1,7 +1,7 @@
 /**
  * E2EE 密码学原语（X25519 + AES-256-GCM）
  *
- * 字节级对齐 Flutter 端 gv_chat_app/lib/services/e2ee/e2ee_crypto.dart：
+ * 字节级对齐 Flutter 端 open-chat-app/lib/services/e2ee/e2ee_crypto.dart：
  * - 共享密钥 = X25519(私钥, 对端公钥) 的原始 32 字节，直接作 AES-256 密钥（无 HKDF/salt/AAD）
  * - 密文布局 = base64( nonce[12B] || ciphertext || tag[16B] )
  * - 安全码 = SHA-256(utf8(pubA:pubB)) 前 8 字节，大写十六进制、空格分隔

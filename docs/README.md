@@ -1,4 +1,4 @@
-# gv_chat_desktop 文档索引
+# open-chat-desktop 文档索引
 
 桌面端工程规范与业务文档（沉淀性，随需求持续维护）。
 
@@ -9,12 +9,12 @@
 - release-notes.md：发版记录（版本基线 / 产物 / 步骤 / 待验证清单）
 - business/：产品业务文档（会话空间与隐私、功能清单、扫码登录等，逐步沉淀）
 
-> 约定：沉淀性文档放本目录；过程性产出（体检/评审/交付报告）放 ai-team 的 projects/gv_chat/reports/。
+> 约定：沉淀性文档放本目录；过程性产出（体检/评审/交付报告）放 ai-team 的 projects/open-chat/reports/。
 
 
 corepack pnpm typecheck
 
 ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ \
 corepack pnpm build:mas
-/Users/lee/gv_chat_desktop/dist/*.pkg
+/Users/lee/open-chat-desktop/dist/*.pkg
 corepack pnpm build:win

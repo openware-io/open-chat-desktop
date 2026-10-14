@@ -1,6 +1,6 @@
-# gv_chat_desktop Windows 发版规范
+# open-chat-desktop Windows 发版规范
 
-统一规范见 [`gv_im_server/docs/RELEASE_RUNBOOK.md`](../../gv_im_server/docs/RELEASE_RUNBOOK.md) 第 5.6 节；本文件仅说明桌面端必须遵守的发布约束。
+统一规范见 [`open-im-server/docs/RELEASE_RUNBOOK.md`](../../open-im-server/docs/RELEASE_RUNBOOK.md) 第 5.6 节；本文件仅说明桌面端必须遵守的发布约束。
 
 ## 发布完成的定义
 

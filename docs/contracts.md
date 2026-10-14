@@ -1,8 +1,8 @@
-# gv_chat IM 客户端契约规范（桌面端 / 移动端共用权威基线）
+# open-chat IM 客户端契约规范（桌面端 / 移动端共用权威基线）
 
 > 版本：v1.0（契约基线）
-> 适用：Electron 桌面客户端（TypeScript）与 Flutter 移动端（gv_chat_app）
-> 后端：gv_im_server（Java 微服务，唯一后端；REST 经 gateway 暴露于 `/api/v1/**`，WS 暴露于 `/ws/im/v1`）
+> 适用：Electron 桌面客户端（TypeScript）与 Flutter 移动端（open-chat-app）
+> 后端：open-im-server（Java 微服务，唯一后端；REST 经 gateway 暴露于 `/api/v1/**`，WS 暴露于 `/ws/im/v1`）
 > 状态：基于真实代码逐条核对；未 100% 确认的细节以「待二次核对」标注，见文末「核对清单」。
 >
 > 硬性约束：
@@ -16,20 +16,20 @@
 
 ## 1.0 通用约定（客户端必须遵守）
 
-证据：`gv_chat_app/lib/services/api_client.dart`（L26-L77）、`gv_chat_app/lib/core/config.dart`（L24-L29）
+证据：`open-chat-app/lib/services/api_client.dart`（L26-L77）、`open-chat-app/lib/core/config.dart`（L24-L29）
 
 - **Base URL**：`{apiBase}/api/v1`（`apiPrefix = apiBase 去尾斜杠 + "/api/v1"`）。
   - dev 默认 `http://192.168.1.3:3002`；prod 默认 `https://api.dev.example.com`（`gv_chat_app/lib/core/env_config.dart` L19-L35，可被 `--dart-define=GV_API_BASE` 覆盖）。桌面端应保留等价可配置项，**不要硬编码域名**。
 - **认证**：`Authorization: Bearer <token>`（token 来自登录响应，非空才注入，api_client.dart L36-L39）。
 - **登录/注册响应 TokenResponse**：`{ "access_token": string, "user": {...} }`（`TokenResponse.java` L5 明确 `@JsonProperty("access_token")`；字段名是 `access_token` 而非 `token`）。
 - **公共请求头**（api_client.dart L40-L43）：`x-lang`、`X-Client-Contract: im-v1`、`X-Client-Platform`（桌面端建议 `windows`/`macos`）。
-- **幂等键**：所有写方法（POST/PUT/PATCH/DELETE）自动加 `Idempotency-Key: <UUID v4>`（api_client.dart L47-L50）。媒体上传会话接口在服务端**强制要求** UUID 格式 Idempotency-Key（`gv_im_server/services/support/im-support-service/.../MediaUploadSessionController.java` L26-L29、L50-L56）。
+- **幂等键**：所有写方法（POST/PUT/PATCH/DELETE）自动加 `Idempotency-Key: <UUID v4>`（api_client.dart L47-L50）。媒体上传会话接口在服务端**强制要求** UUID 格式 Idempotency-Key（`open-im-server/services/support/im-support-service/.../MediaUploadSessionController.java` L26-L29、L50-L56）。
 - **响应信封**：多数接口为 `{ code?, message?, data, requestId? }`；客户端在拦截器里解包 `data`（api_client.dart L54-L62）。桌面端 HTTP 层需实现同款「`data` 解包 + `requestId` 存在性判定」逻辑，否则解析错位。
-- **HTTP 查询参数里 ChatType/MsgType 一律大写**（Spring `Enum.valueOf` 大小写敏感）：`chatTypeToHttpQuery(value).toUpperCase()`（`gv_chat_app/lib/core/chat_type_wire.dart` L13、L15）。JSON/WS 里则用 @JsonValue 的小写值（`PRIVATE → private` 等）。
+- **HTTP 查询参数里 ChatType/MsgType 一律大写**（Spring `Enum.valueOf` 大小写敏感）：`chatTypeToHttpQuery(value).toUpperCase()`（`open-chat-app/lib/core/chat_type_wire.dart` L13、L15）。JSON/WS 里则用 @JsonValue 的小写值（`PRIVATE → private` 等）。
 
 ## 1.1 认证 Auth（服务：user）
 
-证据：`gv_chat_app/lib/services/generated_im_api_client.dart`（L14-L27）、`gv_im_server/services/user/im-user-service/.../api/controller/AuthController.java`
+证据：`open-chat-app/lib/services/generated_im_api_client.dart`（L14-L27）、`open-im-server/services/user/im-user-service/.../api/controller/AuthController.java`
 
 | Method | Path | 请求要点 | 响应要点 |
 |---|---|---|---|
@@ -207,7 +207,7 @@
 
 ## 1.10 媒体 Media（服务：support）
 
-证据：`gv_chat_app/lib/services/im_api.dart` L535-L906（手写上传/下载）；`MediaUploadSessionController.java`、`MediaMultipartUploadController.java`、`MediaObjectController.java`
+证据：`open-chat-app/lib/services/im_api.dart` L535-L906（手写上传/下载）；`MediaUploadSessionController.java`、`MediaMultipartUploadController.java`、`MediaObjectController.java`
 
 - **上传会话（≤20MB 单段直传）**：
   - POST /media/upload-sessions `{ scope, mediaKind, fileName, contentType, size, sha256, durationMs? }` → `{ uploadSessionId, objectId, uploadUrl, requiredHeaders? }`（要求 Idempotency-Key）
@@ -263,7 +263,7 @@
 
 ## 1.13 OpenAPI 5 份 JSON 的覆盖缺口（对照结论）
 
-5 份 OpenAPI：`gv_im_server/docs/contracts/openapi/{admin,conversation,message,order,user}.json`。
+5 份 OpenAPI：`open-im-server/docs/contracts/openapi/{admin,conversation,message,order,user}.json`。
 
 **完全无 OpenAPI 覆盖的域（以 generated_im_api_client.dart + 后端 Controller 为准，属契约必须，但 JSON 无文档）：**
 
@@ -284,7 +284,7 @@
 
 ## 2.1 连接地址
 
-证据：`gv_im_server/gateways/im-access-ws/.../config/WebSocketConfig.java` L45（注册路径 `/ws/im/v1`）；`gv_chat_app/lib/core/env_config.dart` L25-L29。
+证据：`open-im-server/gateways/im-access-ws/.../config/WebSocketConfig.java` L45（注册路径 `/ws/im/v1`）；`open-chat-app/lib/core/env_config.dart` L25-L29。
 
 - 端点：`ws(s)://{host}/ws/im/v1?ticket=<ticket>`
   - dev 默认 `ws://192.168.1.3:3002/ws/im/v1`；prod `wss://api.dev.example.com/ws/im/v1`。
@@ -309,7 +309,7 @@
 
 ## 2.4 事件名全集
 
-证据：`gv_im_server/platform/im-protocol-ws/.../constant/WsEvents.java`（L8-L48）。
+证据：`open-im-server/platform/im-protocol-ws/.../constant/WsEvents.java`（L8-L48）。
 
 | 事件 | 方向 | 语义 |
 |---|---|---|
@@ -384,7 +384,7 @@
 
 # 三、E2EE 契约（字节级，最关键）
 
-> 权威来源：`gv_chat_app/lib/services/e2ee/e2ee_crypto.dart`、`e2ee_manager.dart`、`e2ee_session_store.dart`；后端 `SecretChat.java`、`SecretGroupChat.java`、`DeviceKeyController.java`、`SecretMessageController.java`。
+> 权威来源：`open-chat-app/lib/services/e2ee/e2ee_crypto.dart`、`e2ee_manager.dart`、`e2ee_session_store.dart`；后端 `SecretChat.java`、`SecretGroupChat.java`、`DeviceKeyController.java`、`SecretMessageController.java`。
 > 桌面端用 libsodium 实现时必须与 Flutter 端（`package:cryptography` 的 X25519 + AesGcm）**字节级一致**。
 
 ## 3.1 X25519 ECDH 密钥协商
@@ -497,7 +497,7 @@
 
 ## 4.1 MsgType 11 种枚举
 
-证据：`gv_im_server/platform/im-common/.../enums/MsgType.java` L9-L23（@JsonValue 小写）。
+证据：`open-im-server/platform/im-common/.../enums/MsgType.java` L9-L23（@JsonValue 小写）。
 
 | 枚举常量 | 线上值（@JsonValue） |
 |---|---|
@@ -529,7 +529,7 @@
 
 ## 4.3 消息 JSON 字段（服务端权威：MessageResponse + WS chat:receive）
 
-证据：`MessageResponse.java` L10-L13（REST）；`StoredMessageWsPayloadFactory.java` L24-L53（WS）；`Message.java` L11-L28（领域）；客户端 `ChatMessage`（`gv_chat_app/packages/gv_core/lib/src/models/chat_message.dart` L135-L167）。
+证据：`MessageResponse.java` L10-L13（REST）；`StoredMessageWsPayloadFactory.java` L24-L53（WS）；`Message.java` L11-L28（领域）；客户端 `ChatMessage`（`open-chat-app/packages/gv_core/lib/src/models/chat_message.dart` L135-L167）。
 
 **REST `MessageResponse` 字段**：`id, msgId, conversationId, seq, fromUserId, senderUsername, toId, chatType, msgType, content, clientMsgId, replyMsgId, atUsers, status, createdBy, createdAt, updatedBy, updatedAt, media`
 - `media`：`[{ objectId, url }]`（`MessageMedia` record，`MessageMedia.java`）。
@@ -542,7 +542,7 @@
 
 ## 4.4 content 按 msgType 的结构（渲染/解析契约）
 
-证据：`gv_chat_app/packages/gv_core/lib/src/media/media_url.dart`（image/video）；`gv_chat_app/lib/core/namecard_message.dart`（namecard）；`gv_chat_app/lib/core/call_trace_display.dart`（call）；`chat_message.dart` L71-L100（收包归一）；`chat_room_message_tile.dart` L380-L646（渲染分支）。
+证据：`open-chat-app/packages/gv_core/lib/src/media/media_url.dart`（image/video）；`open-chat-app/lib/core/namecard_message.dart`（namecard）；`open-chat-app/lib/core/call_trace_display.dart`（call）；`chat_message.dart` L71-L100（收包归一）；`chat_room_message_tile.dart` L380-L646（渲染分支）。
 
 | msgType | content 结构 |
 |---|---|
@@ -579,7 +579,7 @@
 
 ## 4.7 本地库表结构（桌面端 better-sqlite3 需对齐的基线）
 
-证据：`gv_chat_app/lib/database/chat_database.dart`（Drift，4 表，schemaVersion=5）。
+证据：`open-chat-app/lib/database/chat_database.dart`（Drift，4 表，schemaVersion=5）。
 
 | 表 | 主键 | 关键列 |
 |---|---|---|
@@ -596,14 +596,14 @@
 
 # 核对清单（未能 100% 确认 / 需与 Flutter 端或后端 owner 二次确认）
 
-1. **libsodium ↔ Flutter AES-GCM 字节级互操作**：Flutter `package:cryptography` 的 AesGcm 输出布局已确认为 `nonce(12B)||ciphertext||tag(16B)` 前缀拼接（e2ee_crypto.dart L65-L69）；但两端从未实测互通。需用一组已知明文/共享密钥做交叉 KAT，确认 libsodium `crypto_aead_aes256gcm_*` 的 tag 位置/长度（16B）与 nonce 前缀拼接一致。核对路径：`gv_chat_app/lib/services/e2ee/e2ee_crypto.dart`。
+1. **libsodium ↔ Flutter AES-GCM 字节级互操作**：Flutter `package:cryptography` 的 AesGcm 输出布局已确认为 `nonce(12B)||ciphertext||tag(16B)` 前缀拼接（e2ee_crypto.dart L65-L69）；但两端从未实测互通。需用一组已知明文/共享密钥做交叉 KAT，确认 libsodium `crypto_aead_aes256gcm_*` 的 tag 位置/长度（16B）与 nonce 前缀拼接一致。核对路径：`open-chat-app/lib/services/e2ee/e2ee_crypto.dart`。
 2. **X25519 共享密钥是否真的不经过 KDF**：已确认 Flutter 直接用 `X25519` 原始 32B 作 AES 密钥（e2ee_crypto.dart L36-L59）。属既成契约，但桌面端实现时若改用 `crypto_box_beforenm`/`crypto_kx` 需确保不引入 HKDF/salt，否则两端密文互解失败。核对路径同上。
 3. **`location` 消息 content schema**：后端有 LOCATION 枚举，但 Flutter 渲染无分支、未见 lat/lng 结构证据。需与 Flutter owner 确认 location 消息是否上线及其 content JSON 结构。核对路径：`chat_room_message_tile.dart`、后端 `MsgType.java`。
 4. **群安全码客户端是否应本地重算**：后端群安全码 = 成员公钥「字典序排序 + 冒号拼接 + SHA-256 前 8 字节」（SecretGroupChat.java L57-L81）；Flutter 端注释「仅展示不重算」。桌面端若要展示/核验，需确认是否本地重算及其排序规则与后端一致。核对路径：`SecretGroupChat.java`、`secret_group_chat_models.dart`。
 5. **secret message/group status 枚举全集**：客户端 `SecretMessageWire` 默认 `active`，states 接口 reason 为 `recalled`/`deleted`；完整 status 值域（是否还有 `destroyed` 等）未逐条穷尽。核对路径：`SecretMessageResult.java`、`SecretMessageController.java`。
 6. **file 消息 content 是否含 size**：客户端 file JSON 仅 `{name,url}`（chat_message.dart L91-L98）；文件大小取自媒体 access 响应 `size`，不在消息 content 内。若桌面端要显示大小，需确认是否有其它字段来源。
 7. **`chat:receive` 是否补发 `mediaObjectIds`**：WS 载荷含 `media`（对象数组）不含 `mediaObjectIds`（StoredMessageWsPayloadFactory L33）；客户端靠 `media[].objectId` 归一。桌面端应直接消费 `media`，不要等 `mediaObjectIds`。
-8. **TokenResponse 字段名**：登录/注册响应为 `{ access_token, user }`（TokenResponse.java L5）；但 Flutter ApiClient 读的是 `_storage.token`。桌面端需确认客户端从 `access_token` 取值的实际落库逻辑，避免字段名混淆。核对路径：`TokenResponse.java`、`gv_chat_app/lib/core/local_storage.dart`。
+8. **TokenResponse 字段名**：登录/注册响应为 `{ access_token, user }`（TokenResponse.java L5）；但 Flutter ApiClient 读的是 `_storage.token`。桌面端需确认客户端从 `access_token` 取值的实际落库逻辑，避免字段名混淆。核对路径：`TokenResponse.java`、`open-chat-app/lib/core/local_storage.dart`。
 9. **`chat:read` / `chat:recall` 的 `commandId`**：为服务端受理流水，客户端仅需透传/忽略；其是否可用于幂等去重未确认。
 10. **WS 心跳间隔**：服务端对 `heartbeat` 回 `{timestamp}`（ImWebSocketHandler L100-L101），但客户端建议心跳周期未在代码里找到权威常量，需与后端 owner 确认保活策略。
 11. **`hideGroupMemberInfo` 双来源**：平台级开关经 `/config/client` 下发（默认 true），但 `/users/me/privacy-settings` 响应 DTO 仍含 `hideGroupMemberInfo` 字段（PrivacySettingsResponse.java L4）。需与后端 owner 确认该残留字段是否已废弃、桌面端应以哪个为准。
