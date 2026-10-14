@@ -48,7 +48,7 @@ function randomString(size: number): string {
 
 async function accessToken(parent: BrowserWindow): Promise<string> {
   const token = await parent.webContents.executeJavaScript(
-    "localStorage.getItem('gv_chat_access_token') || sessionStorage.getItem('gv_chat_access_token') || ''",
+    "localStorage.getItem('open-chat_access_token') || sessionStorage.getItem('open-chat_access_token') || ''",
     true
   )
   if (typeof token !== 'string' || !token) throw new Error('IM 登录态缺失')
@@ -111,7 +111,7 @@ export function registerHybridIpc(): void {
     if (!policy) throw new Error('Hybrid URL 未登记')
     const parent = BrowserWindow.fromWebContents(event.sender)
     if (!parent) throw new Error('invalid parent window')
-    const partition = `persist:gv-hybrid-${policy.appId}`
+    const partition = `persist:open-hybrid-${policy.appId}`
     const hybridSession = session.fromPartition(partition)
     const child = new BrowserWindow({
       width: 1100, height: 760, parent,

@@ -5,8 +5,8 @@ import { http } from '../services/http/httpClient'
 import { connectWs, closeWs, getWsClient } from '../services/ws/session'
 import { normalizeEntityId } from '../../../shared/id'
 
-const TOKEN_KEY = 'gv_chat_access_token'
-const USER_KEY = 'gv_chat_user'
+const TOKEN_KEY = 'open-chat_access_token'
+const USER_KEY = 'open-chat_user'
 
 function readStoredValue(key: string): string | null {
   return localStorage.getItem(key) ?? sessionStorage.getItem(key)

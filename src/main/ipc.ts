@@ -51,10 +51,10 @@ export function registerMediaIpc(): void {
       if (mediaUrl.protocol !== 'http:' && mediaUrl.protocol !== 'https:') {
         throw new Error('unsupported media URL')
       }
-      const fileName = (req.fileName || 'wv-chat-media')
+      const fileName = (req.fileName || 'open-chat-media')
         .replace(/[\\/:*?"<>|]/g, '-')
         .replace(/^\.+/, '')
-        .trim() || 'wv-chat-media'
+        .trim() || 'open-chat-media'
       const ownerWindow = BrowserWindow.fromWebContents(event.sender)
       const result = ownerWindow
         ? await dialog.showSaveDialog(ownerWindow, { defaultPath: fileName })

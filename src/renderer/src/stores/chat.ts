@@ -117,7 +117,7 @@ function sortMessages(rows: MessageRow[]): MessageRow[] {
 
 function loadDraftMap(): Record<string, string> {
   try {
-    return JSON.parse(localStorage.getItem('gv_chat_drafts') ?? '{}')
+    return JSON.parse(localStorage.getItem('open-chat_drafts') ?? '{}')
   } catch {
     return {}
   }
@@ -125,7 +125,7 @@ function loadDraftMap(): Record<string, string> {
 
 function loadClearMap(): Record<string, number> {
   try {
-    return JSON.parse(localStorage.getItem('gv_chat_clear_cutoffs') ?? '{}')
+    return JSON.parse(localStorage.getItem('open-chat_clear_cutoffs') ?? '{}')
   } catch {
     return {}
   }
@@ -133,7 +133,7 @@ function loadClearMap(): Record<string, number> {
 
 function loadHiddenMap(): Record<string, string[]> {
   try {
-    const raw = JSON.parse(localStorage.getItem('gv_chat_hidden_messages') ?? '{}') as Record<string, unknown>
+    const raw = JSON.parse(localStorage.getItem('open-chat_hidden_messages') ?? '{}') as Record<string, unknown>
     return Object.fromEntries(
       Object.entries(raw).map(([key, value]) => [
         key,
@@ -189,11 +189,11 @@ export const useChatStore = defineStore('chat', () => {
   }
 
   function saveHiddenMap(): void {
-    localStorage.setItem('gv_chat_hidden_messages', JSON.stringify(hiddenMap.value))
+    localStorage.setItem('open-chat_hidden_messages', JSON.stringify(hiddenMap.value))
   }
 
   function saveClearMap(): void {
-    localStorage.setItem('gv_chat_clear_cutoffs', JSON.stringify(clearMap.value))
+    localStorage.setItem('open-chat_clear_cutoffs', JSON.stringify(clearMap.value))
   }
 
   function sortConversations(): void {
@@ -764,7 +764,7 @@ export const useChatStore = defineStore('chat', () => {
     const key = scopeId.value + '|' + peerId + '|' + chatType
     if (text) draftMap.value[key] = text
     else delete draftMap.value[key]
-    localStorage.setItem('gv_chat_drafts', JSON.stringify(draftMap.value))
+    localStorage.setItem('open-chat_drafts', JSON.stringify(draftMap.value))
   }
 
   async function sendMedia(file: File, msgType: 'image' | 'video' | 'voice' | 'file'): Promise<void> {

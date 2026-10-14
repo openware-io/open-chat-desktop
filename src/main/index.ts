@@ -79,7 +79,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  db = new ChatDatabase(join(app.getPath('userData'), 'gv-chat.db'))
+  db = new ChatDatabase(join(app.getPath('userData'), 'open-chat.db'))
   registerDbIpc(db)
   registerNotifyIpc()
   registerApiIpc()

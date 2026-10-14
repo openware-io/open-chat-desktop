@@ -3,7 +3,7 @@
     <section class="login-shell">
       <aside class="brand-panel">
         <div class="brand-logo">
-          <img class="brand-logo-image" src="../assets/wv-chat-icon.png" alt="" />
+          <img class="brand-logo-image" src="../assets/open-chat-icon.png" alt="" />
           <span>{{ t('login.title') }}</span>
         </div>
 

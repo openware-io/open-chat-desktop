@@ -13,7 +13,7 @@ export interface QrLoginPoll {
 }
 
 /** 二维码内容前缀，App 端扫描据此识别为登录二维码 */
-export const QR_LOGIN_SCHEME = 'GV_LOGIN:'
+export const QR_LOGIN_SCHEME = 'OPEN_LOGIN:'
 
 export function createQrSession(): Promise<QrLoginSession> {
   return http.post('/auth/qr-login/session')

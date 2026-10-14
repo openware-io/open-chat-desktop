@@ -28,7 +28,7 @@ const auth = useAuthStore()
 const qrDataUrl = ref('')
 
 onMounted(async () => {
-  qrDataUrl.value = await QRCode.toDataURL('GV_UID:' + (auth.user?.username ?? '').trim(), {
+  qrDataUrl.value = await QRCode.toDataURL('OPEN_UID:' + (auth.user?.username ?? '').trim(), {
     width: 260,
     margin: 2,
     errorCorrectionLevel: 'H'

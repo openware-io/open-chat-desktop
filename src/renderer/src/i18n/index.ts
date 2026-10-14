@@ -6,7 +6,7 @@ import en from './locales/en'
 export type AppLocale = 'zh-CN' | 'en'
 
 export const DEFAULT_LOCALE: AppLocale = 'zh-CN'
-export const LOCALE_STORAGE_KEY = 'gv_chat_locale'
+export const LOCALE_STORAGE_KEY = 'open-chat_locale'
 
 function readStoredLocale(): AppLocale {
   try {
