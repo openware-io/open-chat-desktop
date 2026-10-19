@@ -1,5 +1,5 @@
-appId: com.csmimtbshop.com
-productName: WV Chat
+﻿appId: com.csmimtbshop.com
+productName: OpenChat
 directories:
   buildResources: build
   output: dist
@@ -20,15 +20,15 @@ nsis:
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: true
   createStartMenuShortcut: true
-  shortcutName: WV Chat
+  shortcutName: OpenChat
 mac:
   target:
     - dmg
   icon: build/icon.png
   category: public.app-category.social-networking
   extendInfo:
-    NSMicrophoneUsageDescription: WV Chat uses the microphone for voice and video calls.
-    NSCameraUsageDescription: WV Chat uses the camera for video calls.
+    NSMicrophoneUsageDescription: OpenChat uses the microphone for voice and video calls.
+    NSCameraUsageDescription: OpenChat uses the camera for video calls.
 mas:
   type: distribution
   identity: 6J34YQQ5AU
@@ -45,3 +45,4 @@ masDev:
   entitlementsInherit: build/entitlements.mas.inherit.plist
   hardenedRuntime: false
   gatekeeperAssess: false
+

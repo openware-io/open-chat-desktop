@@ -1,6 +1,8 @@
 # open-chat-desktop
 
-WV Chat 跨平台桌面客户端（Electron + Vue 3 + TypeScript）。
+[中文](README.md) | [English](README.en.md)
+
+OpenChat 跨平台桌面客户端（Electron + Vue 3 + TypeScript）。
 
 ## 技术栈
 
