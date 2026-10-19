@@ -19,7 +19,7 @@
 证据：`open-chat-app/lib/services/api_client.dart`（L26-L77）、`open-chat-app/lib/core/config.dart`（L24-L29）
 
 - **Base URL**：`{apiBase}/api/v1`（`apiPrefix = apiBase 去尾斜杠 + "/api/v1"`）。
-  - dev 默认 `http://192.168.1.3:3002`；prod 默认 `https://api.dev.example.com`（`open-chat-app/lib/core/env_config.dart` L19-L35，可被 `--dart-define=OPEN_API_BASE` 覆盖）。桌面端应保留等价可配置项，**不要硬编码域名**。
+  - dev 默认 `http://<开发机IP>:3002`；prod 默认 `https://api.dev.example.com`（`open-chat-app/lib/core/env_config.dart` L19-L35，可被 `--dart-define=OPEN_API_BASE` 覆盖）。桌面端应保留等价可配置项，**不要硬编码域名**。
 - **认证**：`Authorization: Bearer <token>`（token 来自登录响应，非空才注入，api_client.dart L36-L39）。
 - **登录/注册响应 TokenResponse**：`{ "access_token": string, "user": {...} }`（`TokenResponse.java` L5 明确 `@JsonProperty("access_token")`；字段名是 `access_token` 而非 `token`）。
 - **公共请求头**（api_client.dart L40-L43）：`x-lang`、`X-Client-Contract: im-v1`、`X-Client-Platform`（桌面端建议 `windows`/`macos`）。
@@ -287,7 +287,7 @@
 证据：`open-im-server/gateways/im-access-ws/.../config/WebSocketConfig.java` L45（注册路径 `/ws/im/v1`）；`open-chat-app/lib/core/env_config.dart` L25-L29。
 
 - 端点：`ws(s)://{host}/ws/im/v1?ticket=<ticket>`
-  - dev 默认 `ws://192.168.1.3:3002/ws/im/v1`；prod `wss://api.dev.example.com/ws/im/v1`。
+  - dev 默认 `ws://<开发机IP>:3002/ws/im/v1`；prod `wss://api.dev.example.com/ws/im/v1`。
 - 认证方式：URL query `ticket`（**不是** `Authorization` 头）。握手拦截器解析 query 中的 `ticket`，校验失败返回 HTTP 401 拒绝握手（`WebSocketAuthInterceptor.java` L47-L87）。
 
 ## 2.2 票据获取与校验语义

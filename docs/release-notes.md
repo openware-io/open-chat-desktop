@@ -11,7 +11,7 @@
 - `package.json` 的 `version` 是桌面端版本的唯一权威来源，默认 PATCH +1。
 - Windows `buildNumber` 必须比后台 `windows/stable` 当前最大 buildNumber 严格 +1；不能与 Android 或其他平台共用、推断或复用构建号。
 - 构建命令：`npm run build:win`。
-- 产物：`dist/WV Chat Setup <version>.exe`；发布制品类型为 `exe`，架构为 `x64`。
+- 产物：`dist/OpenChat Setup <version>.exe`；发布制品类型为 `exe`，架构为 `x64`。
 
 ## 后台发布与验收
 
